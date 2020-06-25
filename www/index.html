@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang=en>
+
+<head>
+    <meta charset="UTF-8" >
+
+    <style>
+      .container {
+	  height: 600px;
+	  position: relative;
+
+	  border: 3px solid green;
+
+      }
+
+      .center {
+	  margin: 0;
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  -ms-transform: translate(-50%, -50%);
+	  transform: translate(-50%, -50%);
+	  text-align: center;
+      }
+      .button {
+	  background-color: #4CAF50; /* Green */
+	  border: none;
+	  color: white;
+	  padding: 20% 100px;
+	  text-align: center;
+	  text-decoration: none;
+	  display: inline-block;
+	  font-size: 30px;
+      }
+    </style>
+    
+</head>
+
+<body onload="updateStatus()">
+
+  <div class="container" style="font-size:1.5em">
+    <div class="center">
+    <h1
+      id="m01"
+      >
+      Sound Currently Inactive
+    </h1>
+      <button class="button" onclick="enableSound()">ENABLE</button>
+      <button class="button" style="background-color:rgba(255,0,0,255)" onclick="disableSound()">DISABLE</button>
+    </div>
+  </div>
+    <script>
+      function updateStatus() {
+	  var xhttp = new XMLHttpRequest();
+	  xhttp.open("GET", "status", false);
+	  var response = xhttp.send(null);
+	  var result = xhttp.response.split(',');
+	  var header = document.getElementById("m01");
+	  if (result[0] == "true") {
+	      header.innerHTML = "Sound Currently Enabled @ " + result[1];
+	      document.body.style.backgroundColor = "green";
+	  } else {
+	      header.innerHTML = "Sound Currently Disabled";
+	      document.body.style.backgroundColor = "white";
+	  }
+      }
+      
+      function enableSound() {
+	  var xhttp = new XMLHttpRequest();
+	  xhttp.open("GET", "1/2000", false);
+	  var response = xhttp.send(null);
+	  updateStatus();
+      }
+
+      function disableSound(){
+	  var xhttp = new XMLHttpRequest();
+	  xhttp.open("GET", "0/2000", false);
+	  var response = xhttp.send(null);
+	  updateStatus();
+      }
+      
+    </script>
+    
+</body>
+</html>
